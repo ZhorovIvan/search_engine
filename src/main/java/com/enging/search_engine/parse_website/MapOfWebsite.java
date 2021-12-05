@@ -5,52 +5,48 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.concurrent.RecursiveTask;
 
 
 @ToString
-public class MapOfWebsite extends RecursiveTask<String> {
+public class MapOfWebsite extends RecursiveTask<HashSet<String>> {
 
+    private final String url;
     private static HashSet<String> urls;
-    private String url;
+    private static final int TIME_SHOUT_DOWN = 500;
+    private static final String GENERAL_URL = "http://www.playback.ru";
+
 
     public MapOfWebsite(String url) {
         if (urls == null) {
             urls = new HashSet<>();
         }
+        urls.add(url);
         this.url = url;
     }
 
-
-
     @Override
-    protected String compute() {
+    protected HashSet<String> compute() {
         try {
-            StringBuilder test = new StringBuilder();
             Elements elements = getElementsFromWebSite();
-            ArrayList<MapOfWebsite> mapOfWebsites = new ArrayList<>();
+            HashSet<MapOfWebsite> mapOfWebsites = new HashSet<>();
             for (Element element : elements) {
-                Thread.sleep(500);
-                if (!urls.contains(element.absUrl("href")) &&
-                        element.absUrl("href").matches("http://www.playback.ru" + ".*.html")) {
-                    System.out.println(element.absUrl("href"));
-                    urls.add(element.absUrl("href"));
-                    MapOfWebsite task = new MapOfWebsite(element.absUrl("href"));
+                String currentURL = element.absUrl("href");
+                if (currentURL.matches(GENERAL_URL + ".*.html")&& !urls.contains(currentURL)) {
+                    Thread.sleep(TIME_SHOUT_DOWN);
+                    MapOfWebsite task = new MapOfWebsite(currentURL);
                     task.fork();
                     mapOfWebsites.add(task);
                 }
-
-            }
-            for (MapOfWebsite mapOfWebsite : mapOfWebsites) {
-                test.append(mapOfWebsite.join());
             }
 
-            //urls.forEach(System.out::println);
-            return test.toString();
-        } catch (
-                Exception e) {
+            for (MapOfWebsite mapOfWebsite: mapOfWebsites) {
+                mapOfWebsite.join();
+            }
+            return urls;
+
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return null;
@@ -64,4 +60,5 @@ public class MapOfWebsite extends RecursiveTask<String> {
                 .get();
         return doc.select("a");
     }
+
 }
