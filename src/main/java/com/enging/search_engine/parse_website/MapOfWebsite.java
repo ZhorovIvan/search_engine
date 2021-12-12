@@ -1,9 +1,11 @@
 package com.enging.search_engine.parse_website;
+
 import lombok.ToString;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+
 import java.io.IOException;
 import java.util.HashSet;
 import java.util.concurrent.RecursiveTask;
@@ -33,15 +35,15 @@ public class MapOfWebsite extends RecursiveTask<HashSet<String>> {
             HashSet<MapOfWebsite> mapOfWebsites = new HashSet<>();
             for (Element element : elements) {
                 String currentURL = element.absUrl("href");
-                if (currentURL.matches(GENERAL_URL + ".*.html")&& !urls.contains(currentURL)) {
-                    Thread.sleep(TIME_SHOUT_DOWN);
+                if (currentURL.matches(GENERAL_URL + ".*.html") && !urls.contains(currentURL)) {
+//                    Thread.sleep(TIME_SHOUT_DOWN);
                     MapOfWebsite task = new MapOfWebsite(currentURL);
                     task.fork();
                     mapOfWebsites.add(task);
                 }
             }
 
-            for (MapOfWebsite mapOfWebsite: mapOfWebsites) {
+            for (MapOfWebsite mapOfWebsite : mapOfWebsites) {
                 mapOfWebsite.join();
             }
             return urls;

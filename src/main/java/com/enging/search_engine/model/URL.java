@@ -1,4 +1,4 @@
-package com.enging.search_engine.entyty;
+package com.enging.search_engine.model;
 import com.sun.istack.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,11 +7,10 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Entity
 @Table(name = "path_to_web_site", indexes = @Index(columnList = "path"))
-public class PathWebSite {
+public class URL {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -34,5 +33,12 @@ public class PathWebSite {
     @Setter
     @NotNull
     private String content;
+
+    public URL(String path, int code, String content) {
+        this.path = path;
+        this.code = code;
+        this.content = content;
+    }
+
 
 }
