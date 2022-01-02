@@ -19,6 +19,7 @@ public class UploadToMySQL {
 
     @Autowired
     private URLService urlService;
+    private static final String GENERAL_URL = "http://www.playback.ru";
 
     public void run() {
         try {
@@ -30,7 +31,7 @@ public class UploadToMySQL {
 
     private ArrayList<URL> getAllURLs(){
         Collection<URL> urls = new ForkJoinPool()
-                .invoke(new GetWebsiteMap("http://www.playback.ru"));
+                .invoke(new GetWebsiteMap(GENERAL_URL));
         return new ArrayList<>(urls);
     }
 

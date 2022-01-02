@@ -16,11 +16,10 @@ public class SearchEngineApplication implements CommandLineRunner {
 
     public static void main(String[] args) {
         SpringApplication.run(SearchEngineApplication.class, args);
-
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    public void run(String... args) {
         uploadToMySQL.run();
     }
 }

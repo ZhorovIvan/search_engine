@@ -40,7 +40,7 @@ public class GetWebsiteMap extends RecursiveTask<Collection<URL>> {
         try {
             pageContent = getElementsFromWebSite();
             statusCode = getCodeFromWebSite();
-            urls.put(url, new URL(url, statusCode, pageContent.html()));
+            urls.put(url, new URL(url.replace(GENERAL_URL, ""), statusCode, pageContent.html()));
         }
          catch (IOException | InterruptedException e) {
             e.printStackTrace();
