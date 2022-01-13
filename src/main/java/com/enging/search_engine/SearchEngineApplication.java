@@ -20,6 +20,6 @@ public class SearchEngineApplication implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        uploadToMySQL.run();
+        uploadToMySQL.run("http://www.playback.ru");
     }
 }

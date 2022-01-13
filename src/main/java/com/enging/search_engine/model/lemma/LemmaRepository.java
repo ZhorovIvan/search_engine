@@ -1,7 +1,7 @@
-package com.enging.search_engine.model;
+package com.enging.search_engine.model.lemma;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface URLRepository extends JpaRepository<URL, Integer> {
+public interface LemmaRepository extends JpaRepository<Lemma, Integer> {
 }

@@ -1,15 +1,13 @@
-package com.enging.search_engine.model;
-import com.sun.istack.NotNull;
+package com.enging.search_engine.model.page;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import javax.persistence.*;
 
 @NoArgsConstructor
 @Entity
 @Table(indexes = @Index(columnList = "path"))
-public class URL {
+public class Page {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -19,21 +17,18 @@ public class URL {
 
     @Getter
     @Setter
-    @NotNull
     private String path;
 
     @Setter
     @Getter
-    @NotNull
     private int code;
 
     @Getter
     @Setter
-    @NotNull
     @Column(columnDefinition = " MEDIUMTEXT")
     private String content;
 
-    public URL(String path, int code, String content) {
+    public Page(String path, int code, String content) {
         this.path = path;
         this.code = code;
         this.content = content;

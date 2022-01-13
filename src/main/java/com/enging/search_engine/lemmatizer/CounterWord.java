@@ -10,7 +10,7 @@ import java.util.Locale;
 
 public class CounterWord {
 
-    private final static String SPLIT_TEXT_BY = "[ :;,.-]+";
+    private final static String SPLIT_TEXT_BY = "[ !?:;,.-]+";
     private final static String RUSSIAN_SYMBOL = "[А-Яа-я]+";
     private final static String CHECK_PATH_SPEECH = "(МЕЖД|СОЮЗ|ПРЕДЛ|ЧАСТ)";
 
